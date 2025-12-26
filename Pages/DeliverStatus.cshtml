@@ -1,0 +1,77 @@
+﻿@page
+@model IDCardAutomation.Pages.DeliverStatusModel
+@{
+    ViewData["Title"] = "Deliver Approved ID Requests";
+}
+
+<h2>Approved Requests – Ready for Delivery</h2>
+
+<form method="get" class="mb-3">
+    <label for="entityType">Filter by:</label>
+    <select name="EntityType" onchange="this.form.submit()" class="form-select" style="width:200px; display:inline;">
+        <option value="">All</option>
+        <option value="Student" selected="@(Model.EntityType == "Student")">Student</option>
+        <option value="Employee" selected="@(Model.EntityType == "Employee")">Employee</option>
+    </select>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>S.No</th>
+            <th>ID Code</th>
+            <th>Full Name</th>
+            <th>Request Type</th>
+            <th>Reason</th>
+            <th>Created At</th>
+            <th>View</th>
+            <th>Delivery Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Requests.Any())
+        {
+            <tr><td colspan="7">No approved requests found.</td></tr>
+        }
+        else
+        {
+            int serial = 1;
+            foreach (var req in Model.Requests)
+            {
+                <tr>
+                    <td>@serial</td>
+                    <td>@req.CodeOrRoll</td>
+                    <td>@req.FullName</td>
+                    <td>@req.RequestType</td>
+                    <td>@req.Reason</td>
+                    <td>@req.CreatedAt.ToString("g")</td>
+                    <td>
+                        @if (req.EntityType == "Student")
+                        {
+                            <a class="btn btn-sm btn-info" asp-page="/ViewStudent" asp-route-id="@req.EntityID">View</a>
+                        }
+                        else if (req.EntityType == "Employee")
+                        {
+                            <a class="btn btn-sm btn-info" asp-page="/ViewEmployee" asp-route-id="@req.EntityID">View</a>
+                        }
+                    </td>
+
+                    <td>
+                        @if (req.DeliveryStatus == "Delivered")
+                        {
+                            <button class="btn btn-sm btn-secondary" disabled>Delivered</button>
+                        }
+                        else
+                        {
+                            <a class="btn btn-sm btn-success"
+                               asp-page="/UpdateStatus"
+                               asp-route-id="@req.RequestID"
+                               asp-route-action="deliver">Mark as Delivered</a>
+                        }
+                    </td>
+                </tr>
+                serial++;
+            }
+        }
+    </tbody>
+</table>

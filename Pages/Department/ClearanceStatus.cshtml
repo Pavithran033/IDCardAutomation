@@ -1,0 +1,139 @@
+﻿@page
+@model IDCardAutomation.Pages.Department.ClearanceStatusModel
+@{
+    ViewData["Title"] = "Clearance Form";
+    var emp = Model.EmployeeDetails;
+    var dept = Model.DepartmentClearances;
+    var lib = Model.LibraryClearance;
+    var dts = Model.DTSClearance;
+}
+
+<link href="/css/studentstatus.css" rel="stylesheet" asp-append-version="true" />
+
+<a asp-page="/ReissueOptions" class="btn btn-secondary">Back</a>
+@if (emp == null)
+{
+    <h2 class="text-center mb-4">NOT REQUESTED</h2>
+}
+
+@if (emp != null)
+{
+    <div id="clearanceFormContainer">
+        <!-- Capture only this part -->
+        <div class="head">
+            <h2 class="text-center mb-4">Clearance Form</h2>
+        </div>
+        <div class="card mb-4">
+            <div class="row g-0">
+                <div class="col-md-3 text-center p-3">
+                    @if (emp.Photo != null)
+                    {
+                        var base64 = Convert.ToBase64String(emp.Photo);
+                        <img src="data:image/jpeg;base64,@base64" class="img-thumbnail rounded" style="max-height:200px;" />
+                    }
+                    else
+                    {
+                        <p>No Photo Available</p>
+                    }
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <p><strong>Employee Code:</strong> @emp.EmpCode</p>
+                        <p><strong>Name:</strong> @emp.Name</p>
+                        <p><strong>Department:</strong> @emp.DepartmentName</p>
+                        <p><strong>Designation:</strong> @emp.Designation</p>
+                        <p><strong>Email:</strong> @emp.Email</p>
+                        <p><strong>Last Working Day:</strong> @(emp.ResignationDate?.ToString("dd-MM-yyyy") ?? "Not Assigned")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h4>Clearance Status</h4>
+        <table class="table table-bordered table-striped">
+            <thead class="table-secondary">
+                <tr>
+                    <th>S.No</th>
+                    <th>Department</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
+                    <th>Updated By</th>
+                    <th>Updated Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>@emp.DepartmentName</td>
+                    <td>
+                        <span class="badge @(dept?.Status == "Approved" ? "bg-success" : "bg-secondary")">
+                            @(dept?.Status ?? "Pending")
+                        </span>
+                    </td>
+                    <td>@(dept?.Remarks ?? "None")</td>
+                    <td>Department HOD</td>
+                    <td>@(dept?.UpdatedDate?.ToString("dd-MM-yyyy hh:mm tt") ?? "Not Updated")</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Library</td>
+                    <td>
+                        <span class="badge @(lib?.Status == "Approved" ? "bg-success" : "bg-secondary")">
+                            @(lib?.Status ?? "Pending")
+                        </span>
+                    </td>
+                    <td>@(lib?.Remarks ?? "None")</td>
+                    <td>@(lib?.UpdatedBy ?? "Library Staff")</td>
+                    <td>@(lib?.UpdatedDate?.ToString("dd-MM-yyyy hh:mm tt") ?? "Not Updated")</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>DTS</td>
+                    <td>
+                        <span class="badge @(dts?.Status == "Approved" ? "bg-success" : "bg-secondary")">
+                            @(dts?.Status ?? "Pending")
+                        </span>
+                    </td>
+                    <td>@(dts?.Remarks ?? "None")</td>
+                    <td>@(dts?.UpdatedBy ?? "DTS Staff")</td>
+                    <td>@(dts?.UpdatedDate?.ToString("dd-MM-yyyy hh:mm tt") ?? "Not Updated")</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    @if (Model.IsDownloadAvailable)
+    {
+        <button type="button" class="btn btn-primary mt-3" onclick="downloadClearanceForm()">
+            Download Form
+        </button>
+    }
+}
+else
+{
+    <p class="text-danger">Unable to load employee details.</p>
+}
+
+<!-- Scripts should be outside the table -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+    async function downloadClearanceForm() {
+        const { jsPDF } = window.jspdf;
+
+        // Capture only the clearance form section
+        const content = document.getElementById('clearanceFormContainer');
+
+        const canvas = await html2canvas(content, { scale: 2 });
+        const imgData = canvas.toDataURL('image/png');
+
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pageWidth = 210;
+        const imgWidth = pageWidth - 20; // margins
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+        pdf.save('ClearanceForm.pdf');
+    }
+</script>

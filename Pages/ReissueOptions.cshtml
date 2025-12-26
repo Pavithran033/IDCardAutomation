@@ -1,0 +1,26 @@
+﻿@page
+@model ReissueOptionsModel
+@{
+    ViewData["Title"] = "Reissue Options";
+}
+
+<!-- CSS Link -->
+<link href="~/css/Button.css" rel="stylesheet" asp-append-version="true" />
+
+
+<!-- Main Content -->
+<div class="container">
+    <h2>Choose an Option</h2>
+
+    <div class="button-group">
+        <a asp-page="/ReissueForm" class="btn btn-custom">Reissue Request</a>
+        <a asp-page="/ReissueStatus" class="btn btn-custom">Reissue Status</a>
+        
+
+       @if (Model.UserRole == "Employee")
+        {
+            <a asp-page="/ClearanceForm" class="btn btn-custom">Clearance Form</a>
+            <a asp-page="/Department/ClearanceStatus" class="btn btn-custom">Clearance Form Status</a>
+        }
+    </div>
+</div>

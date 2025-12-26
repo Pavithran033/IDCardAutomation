@@ -1,0 +1,61 @@
+﻿@page 
+@model IDCardAutomation.Pages.ViewEmployeeModel
+@{
+    ViewData["Title"] = "View Employee";
+
+
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+
+<link href="~/css/view-student.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="view-student-container">
+
+<h2>Employee Details</h2>
+ 
+    <div class="photo-section">
+        @if (!string.IsNullOrEmpty(Model.Base64Photo))
+        {
+<img src="@Model.Base64Photo" alt="Employee Photo" class="employee-photo" />
+        }
+        else
+        {
+<span class="no-photo">No Photo Uploaded</span>
+        }
+</div>
+ 
+    <div class="details-section">
+<p><strong>Emp Code:</strong> @Model.Employee.EmpCode</p>
+<p><strong>Full Name:</strong> @Model.Employee.FullName</p>
+<p><strong>DOB:</strong> @Model.Employee.DOB.ToShortDateString()</p>
+<p><strong>Department ID:</strong> @Model.Employee.DepartmentID</p>
+<p><strong>Designation:</strong> @Model.Employee.Designation</p>
+<p><strong>Phone:</strong> @Model.Employee.PhoneNumber</p>
+<p><strong>Email:</strong> @Model.Employee.Email</p>
+<p><strong>Date of Joining:</strong> @Model.Employee.DOJ.ToShortDateString()</p>
+<p><strong>Blood Group:</strong> @Model.Employee.BloodGroup</p>
+<p><strong>Address:</strong> @Model.Employee.Address</p>
+        
+    @if ( Model.UserRole == "Employee")
+{
+    <a asp-page="/ReissueStatus" class="btn btn-secondary">Back</a>
+}
+else if (Model.UserRole == "Admin" )
+{
+    <a asp-page="/EmployeeStatus" class="btn btn-secondary">Back</a>
+}
+
+else
+{
+    <a asp-page="/AddEmployee" class="btn btn-secondary">Back</a> <!-- fallback -->
+}
+
+</div>
+</div>

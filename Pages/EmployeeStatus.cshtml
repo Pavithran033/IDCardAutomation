@@ -1,0 +1,169 @@
+﻿@page
+@model IDCardAutomation.Pages.EmployeeStatusModel
+@{
+    ViewData["Title"] = "Employee Reissue Status";
+    var role = HttpContext.Session.GetString("UserRole");
+}
+<link href="/css/Empolyeestatus.css" rel="stylesheet" asp-append-version="true" />
+
+<h2>Employee Reissue Requests</h2>
+
+<a asp-page="/Dashboard" class="btn btn-secondary">Back</a>  <!-- fallback -->
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<form method="get" class="row mb-3">
+    <div class="col-md-4">
+        <input type="text" name="SearchTerm" class="form-control" placeholder="Search by Emp Code or Name" value="@Request.Query["SearchTerm"]" />
+    </div>
+    <div class="col-md-3">
+        <select name="StatusFilter" class="form-control">
+            <option value="">-- Filter by Status --</option>
+            <option value="Requested" selected="@(Request.Query["StatusFilter"] == "Requested")">Requested</option>
+            <option value="Approved by DTS" selected="@(Request.Query["StatusFilter"] == "Approved by DTS")">Approved</option>
+            <option value="Delivered by DTS" selected="@(Request.Query["StatusFilter"] == "Delivered by DTS")">Delivered</option>
+            <option value="Rejected by DTS" selected="@(Request.Query["StatusFilter"] == "Rejected by DTS")">Rejected</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+    <div class="col-md-2">
+        <a href="?reset=true" class="btn btn-secondary">Reset</a>
+    </div>
+</form>
+
+
+<table class="table table-bordered" id="requestTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Emp Code</th>
+           <!-- <th>Request Type</th>-->
+            <th>Reason</th>
+            <th>Created At</th>
+            <!--<th>Approval Status</th>-->
+            <th>Action</th>          @* NEW *@
+            <th>Remark</th>          @* Approve / Reject *@
+            <th>View</th>             @* NEW *@
+            <th>Edit</th>
+            <th>Request Count</th>
+            <th>Deliver</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var req in Model.Requests)
+        {
+            <tr>
+                <td>@req.FullName</td>
+                <td>@req.CodeOrRoll</td>
+                 
+                <td>@req.Reason</td>
+                <td>@req.CreatedAt.ToString("g")</td>
+
+                
+                <!-- --------------- Remarks column --------------- -->
+               
+
+                <!-- --------------- Actions column --------------- -->
+                <td>
+                    @if (req.ApprovalStatus == "Requested")
+                    {
+                        <button form="form-@req.RequestID" name="Action" value="Approve"
+                                class="btn btn-sm btn-success">
+                            Approve
+                        </button>
+                        <button form="form-@req.RequestID" name="Action" value="Reject"
+                                class="btn btn-sm btn-danger">
+                            Reject
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-outline-secondary btn-sm" disabled>Processed</button>
+                    }
+                </td>
+
+
+
+
+                <td>
+                    @if (req.ApprovalStatus == "Requested")
+                    {
+                        <form id="form-@req.RequestID" method="post">
+                            <input type="hidden" name="RequestID" value="@req.RequestID" />
+                            <input type="text" name="Remarks" class="form-control" placeholder="Remarks" />
+                        </form>
+                    }
+                    else
+                    {
+                        var displayRemarks = !string.IsNullOrWhiteSpace(req.DTS_Remarks)
+                        ? req.DTS_Remarks
+                        : "No Remarks";
+
+                        <input type="text" class="form-control" value="@displayRemarks" readonly />
+                    }
+                </td>
+
+
+                <!-- --------------- View column --------------- -->
+                <td>
+                    <a asp-page="/ViewEmployee"
+                       asp-route-id="@req.EntityID"
+                       class="btn btn-sm btn-info">View</a>
+                </td>
+
+                <!-- --------------- Edit column --------------- -->
+                 <td>
+                    @if (role == "Admin" && req.ApprovalStatus == "Requested")
+                    {
+                        <a asp-page="/EditEmployee"
+                           asp-route-id="@req.EntityID"
+                           class="btn btn-sm btn-warning">Edit</a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-sm btn-secondary" disabled>Edit</button>
+                    }
+               
+                <td>@req.RequestCount</td>
+
+                <!-- --------------- Deliver column --------------- -->
+                <td>
+                    @if (req.ApprovalStatus == "Approved by DTS" && req.DeliveryStatus != "Delivered")
+                    {
+                        <form method="post">
+                            <input type="hidden" name="RequestID" value="@req.RequestID" />
+                            <button name="Action" value="Deliver"
+                                    class="btn btn-sm btn-primary">
+                                Deliver
+                            </button>
+                        </form>
+                    }
+                    else if (req.DeliveryStatus == "Delivered")
+                    {
+                        <span class="text-success">Delivered</span>
+                    }
+                 
+                    else if (req.ApprovalStatus == "Rejected by DTS")
+                    {
+                        <span class="text-danger">Rejected</span>
+                    }
+                   
+                    
+                    else
+                    {
+                        <span class="text-muted">Awaiting Approval</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

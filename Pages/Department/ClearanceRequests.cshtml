@@ -1,0 +1,86 @@
+﻿@page
+@model IDCardAutomation.Pages.Department.ClearanceRequestsModel
+@{
+    ViewData["Title"] = "Clearance Requests";
+}
+
+<link href="/css/studentstatus.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Clearance Requests </h2>
+   
+    
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
+
+<form method="get" class="mb-3 d-flex flex-wrap gap-2">
+    <input type="text" name="Search" class="form-control w-25" placeholder="Search by name, code, or email..." value="@Model.Search" />
+    <select name="StatusFilter" class="form-select w-auto">
+        <option value="All" selected="@((Model.StatusFilter == "All").ToString().ToLower())">All</option>
+        <option value="Pending" selected="@((Model.StatusFilter == "Pending").ToString().ToLower())">Pending</option>
+        <option value="Approved" selected="@((Model.StatusFilter == "Approved").ToString().ToLower())">Approved</option>
+       
+    </select>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>S.No</th>
+            <th>Emp Code</th>
+            <th>Name</th>
+            <th>Designation</th>
+            <th>Email</th>
+            <th>Resignation Date</th>
+            <th>Status</th>
+            <th>Remarks</th>
+           
+            <th>Update</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Requests.Count; i++)
+        {
+            var req = Model.Requests[i];
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@req.EmpCode</td>
+                <td>@req.EmployeeName</td>
+                <td>@req.Designation</td>
+                <td>@req.Email</td>
+                <td>@req.ResignationDate?.ToString("dd-MM-yyyy")</td>
+                <td>
+                    <span class="badge @(req.Status == "Approved" ? "bg-success" : "bg-warning text-dark")">
+                        @req.Status
+                    </span>
+                </td>
+                <td>@(string.IsNullOrEmpty(req.Remarks) ? "None" : req.Remarks)</td>
+
+                <td>
+                    @if (req.Status == "Approved")
+                    {
+                        <span class="text-muted">Locked</span>
+                    }
+                    else
+                    {
+                        <form method="post" class="update-form">
+                            <input type="hidden" name="RequestID" value="@req.RequestID" />
+                            <textarea name="Remarks" class="form-control" rows="1">@req.Remarks</textarea>
+                            <div class="update-actions">
+                                <button type="submit" name="action" value="save" class="btn btn-sm btn-warning">Save Changes</button>
+                                <button type="submit" name="action" value="approve" class="btn btn-sm btn-success">Approve</button>
+                            </div>
+                        </form>
+                    }
+                </td>
+
+            </tr>
+        }
+    </tbody>
+
+</table>

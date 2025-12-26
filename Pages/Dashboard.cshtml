@@ -1,0 +1,18 @@
+﻿@page
+@model IDCardAutomation.Pages.DashboardModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<link href="~/css/dashboard.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="dash-container">
+    <h2>Admin Dashboard</h2>
+
+    <div class="button-group">
+        <a class="btn btn-custom" asp-page="/AddEmployee">Add Employee</a>
+        <a class="btn btn-custom" asp-page="/AddStudent">Add Student</a>
+        <a class="btn btn-custom" asp-page="/StudentStatus">View Student Status</a>
+        <a class="btn btn-custom" asp-page="/EmployeeStatus">View Employee Status</a>
+    </div>
+</div>

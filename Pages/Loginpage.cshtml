@@ -1,0 +1,66 @@
+﻿@page
+@model IDCardAutomation.Pages.LoginpageModel
+@{
+}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Toggle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="~/css/loginpage.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div id="loginForm" class="form-container">
+        <h1>Login</h1>
+        <form>
+            <label for="user">User</label>
+            <input type="email" class="form-control" placeholder="Enter email" required />
+
+            <label for="password">Password</label>
+            <input type="password" class="form-control" placeholder="Enter Password" required />
+
+            <div class="d-flex justify-content-between">
+                <a onclick="showSignUp()">Sign-up</a>
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn mt-3">Login</button>
+        </form>
+    </div>
+
+    <div id="signUpForm" class="form-container hidden">
+        <h1>Sign Up</h1>
+        <form>
+            <label for="email">Email</label>
+            <input type="email" class="form-control" placeholder="Enter email" required />
+
+            <label for="newPassword">Password</label>
+            <input type="password" class="form-control" placeholder="Create Password" required />
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" class="form-control" placeholder="Confirm Password" required />
+
+            <a onclick="showLogin()">Back to Login</a>
+
+            <button type="submit" class="btn mt-3">Register</button>
+        </form>
+    </div>
+
+    <script>
+        function showSignUp() {
+            document.getElementById("loginForm").classList.add("hidden");
+            document.getElementById("signUpForm").classList.remove("hidden");
+        }
+
+        function showLogin() {
+            document.getElementById("signUpForm").classList.add("hidden");
+            document.getElementById("loginForm").classList.remove("hidden");
+        }
+    </script>
+
+</body>
+</html>

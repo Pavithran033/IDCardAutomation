@@ -1,0 +1,84 @@
+﻿@page
+@model IDCardAutomation.Pages.ReissueStatusModel
+@{
+    ViewData["Title"] = "Reissue Status";
+    int serial = 1;
+}
+<link href="/css/studentstatus.css" rel="stylesheet" asp-append-version="true" />
+
+<h2>Your Reissue Requests</h2>
+
+<a asp-page="/ReissueOptions" class="btn btn-back">Back</a>
+
+<br />
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>S.No</th>
+            <th>@(Model.Role == "Student" ? "Roll Number" : "Emp Code")</th>
+            <th>Request Type</th>
+            <th>Reason</th>
+            <th>Created At</th>
+            <th>Approval Status</th>
+
+            
+            
+                <th>Remarks</th>
+            
+            <th>View</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (!Model.Requests.Any())
+        {
+            <tr>
+                <td colspan="8" class="text-center text-muted">No reissue requests found.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var req in Model.Requests)
+            {
+                <tr>
+                    <td>@(serial++)</td>
+                    <td>@req.CodeOrRoll</td>
+                    <td>@req.RequestType</td>
+                    <td>@req.Reason</td>
+                    <td>@req.CreatedAt.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <span class="badge
+                @(req.ApprovalStatus.Contains("Rejected") ? "bg-danger" :
+                                                                      req.ApprovalStatus.Contains("Requested") ? "bg-info" :
+                                        req.ApprovalStatus.Contains("Approved") ? "bg-success" :
+                                        "bg-secondary")">
+                    @req.ApprovalStatus
+                </span>
+            </td>
+
+                    @if (Model.Role == "Student")
+                    {
+                        <td>@req.OsaRemarks</td>
+                    }
+                    else
+                    {
+                        <td>@req.DtsRemarks</td>
+                    }
+
+                    <td>
+                        @if (Model.Role == "Student")
+                        {
+                            <a asp-page="/ViewStudent" asp-route-id="@Model.EntityID" class="btn btn-sm btn-info">View</a>
+                        }
+                        else
+                        {
+                            <a asp-page="/ViewEmployee" asp-route-id="@Model.EntityID" class="btn btn-sm btn-info">View</a>
+                        }
+                    </td>
+                </tr>
+            }
+
+        }
+    </tbody>
+</table>

@@ -1,0 +1,89 @@
+﻿@page
+@model IDCardAutomation.Pages.HR.PendingResignationsModel
+@{
+    ViewData["Title"] = "Pending & Processed Resignation Requests";
+}
+
+
+<link href="/css/studentstatus.css" rel="stylesheet" asp-append-version="true" />
+
+
+<h2>Pending & Processed Resignation Requests</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+
+
+ <a href="/HrDashboard" class="btn btn-secondary">Back</a>
+
+
+
+
+<form method="get" class="mb-3 d-flex flex-wrap gap-2">
+    <input type="text" name="Search" class="form-control w-25" placeholder="Search by name, code, or email..." value="@Model.Search" />
+
+   
+
+
+
+    <select name="Filter" class="form-select w-auto">
+        <option value="All" selected="@((Model.Filter == "All").ToString().ToLower())">All</option>
+        <option value="Pending" selected="@((Model.Filter == "Pending").ToString().ToLower())">Pending</option>
+        <option value="Updated" selected="@((Model.Filter == "Updated").ToString().ToLower())">Updated</option>
+    </select>
+
+    <button type="submit" class="btn btn-primary">Search</button>
+    <a asp-page="/HR/PendingResignations" class="btn btn-outline-secondary">Reset</a>
+</form>
+
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Emp Code</th>
+            <th>Employee</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Email</th>
+            <th>Resignation Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Requests.Count; i++)
+        {
+            var req = Model.Requests[i];
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@req.EmpCode</td>
+                <td>@req.FullName</td>
+                <td>@req.DepartmentName</td>
+                <td>@req.Designation</td>
+                <td>@req.Email</td>
+                <td>@(req.ResignationDate?.ToString("yyyy-MM-dd") ?? "-")</td>
+                <td>
+                    @if (req.ResignationDate == null)
+                    {
+           
+
+
+                        <form method="post" asp-page-handler="Update">
+    <input type="hidden" name="requestId" value="@req.RequestID" />
+    <input type="date" name="resignationDate" required class="form-control d-inline-block" style="width: auto;" />
+    <button type="submit" class="btn btn-primary btn-sm ms-2">Update</button>
+</form>
+
+                    }
+                    else
+                    {
+                        <button class="btn btn-sm btn-secondary" disabled>Updated</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

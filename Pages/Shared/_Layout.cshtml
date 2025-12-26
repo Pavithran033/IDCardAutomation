@@ -1,0 +1,72 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - IDCardAutomation</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/IDCardAutomation.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom shadow-sm px-3"
+             style="padding-top: 0.25rem; padding-bottom: 0.25rem; height:70px;">
+            <div class="container-fluid">
+
+                <!-- ✅ Logo only (large size) -->
+                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                    <img src="~/images/kumaraguru_logo.jpg" style="height:70px; width:200px; object-fit:contain;" /> <!-- increased size -->
+                </a>
+
+                <!-- Navbar toggle for mobile -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Right Side of Navbar -->
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav ms-auto">
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
+                        {
+                          
+                            <li class="nav-item d-flex align-items-center">
+                                <span class="me-2 text-dark">
+                                    Welcome, @HttpContextAccessor.HttpContext.Session.GetString("UserName")
+                                </span>
+                                <form asp-page="/Account/SignIn" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <!-- ✅ Not logged in -->
+                            <li class="nav-item">
+                                <a class="btn btn-primary btn-sm" asp-area="" asp-page="/Account/SignIn">Login</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mt-4">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

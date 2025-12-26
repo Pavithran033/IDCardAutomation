@@ -1,0 +1,178 @@
+﻿/* ========================
+   General Layout
+======================== */
+body {
+    background-color: #f9f9f9;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ========================
+   Heading
+======================== */
+h2 {
+    margin: 20px 0;
+    font-weight: 600;
+    color: #333;
+}
+
+/* ========================
+   Table Styling
+======================== */
+#requestTable {
+    background-color: #fff;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    table-layout: auto;
+}
+
+    #requestTable thead {
+        background-color: #f1f3f6;
+        color: #333;
+        font-weight: 600;
+    }
+
+    #requestTable th {
+        background-color: #003366;
+        color: #ffffff;
+        text-align: center;
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    #requestTable td {
+        padding: 12px;
+        text-align: center;
+        vertical-align: middle;
+        padding: 10px 12px;
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid #dee2e6;
+        font-size: 0.9rem;
+    }
+
+        /* Make remarks input smaller and neat */
+        #requestTable td input.form-control {
+            padding: 4px 8px;
+            font-size: 0.85rem;
+            height: 30px;
+        }
+
+        /* Align buttons neatly inside td */
+        #requestTable td button,
+        #requestTable td a {
+            margin: 2px;
+            min-width: 70px;
+            font-size: 0.8rem;
+            padding: 5px 10px;
+        }
+
+        /* Delivered / Rejected / Awaiting text */
+        #requestTable td span {
+            font-weight: 500;
+        }
+
+/* ========================
+   Buttons Styling Override
+======================== */
+.btn {
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Success (Approve) */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+    .btn-success:hover {
+        background-color: #218838;
+        transform: scale(1.05);
+    }
+
+/* Danger (Reject) */
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        transform: scale(1.05);
+    }
+
+/* Info (View) */
+.btn-info {
+    background-color: #17a2b8;
+    border: none;
+}
+
+    .btn-info:hover {
+        background-color: #138496;
+    }
+
+/* Warning (Edit) */
+.btn-warning {
+    background-color: #ffc107;
+    border: none;
+    color: #212529;
+}
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+    }
+
+/* Primary (Deliver / Search) */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background-color: #0069d9;
+    }
+
+/* Disabled/Processed */
+.btn-outline-secondary,
+.btn-secondary[disabled],
+button[disabled] {
+    background-color: #f1f1f1 !important;
+    border: 1px solid #ccc;
+    color: #888 !important;
+    cursor: not-allowed;
+}
+
+/* ========================
+   Form Controls (Search bar, dropdown)
+======================== */
+form input.form-control,
+form select.form-control {
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+/* ========================
+   Alerts
+======================== */
+.alert {
+    border-radius: 6px;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+a.btn-secondary {
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    color: #003366;
+    border: 2px solid #003366;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+    a.btn-secondary:hover {
+        background-color: #003366;
+        color: #ffffff;
+    }

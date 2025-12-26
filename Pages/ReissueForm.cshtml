@@ -1,0 +1,64 @@
+﻿@page
+@model IDCardAutomation.Pages.ReissueFormModel
+@{
+    ViewData["Title"] = "Reissue Form";
+}
+
+
+<a asp-page="/ReissueOptions" class="btn btn-back">Back</a>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+<link href="~/css/loginpage.css" rel="stylesheet" asp-append-version="true"/>
+<div class="form-container">
+    <h2>Reissue Request Form</h2>
+<form method="post">
+    <div>
+        <label>@(Model.Role == "Employee" ? "Employee Code" : "Roll Number"):</label>
+        <input type="text" value="@Model.CodeOrRoll" readonly class="form-control" />
+    </div>
+    <div>
+            
+        <label>Name:</label>
+        <input type="text" value="@Model.Name" readonly class="form-control" />
+    </div>
+    <div>
+        <label>Request Type:</label>
+        <select asp-for="RequestType" class="form-control">
+            <option value="ID Card Reissue">ID Card Reissue</option>
+            <option value="Access Card Lost">Access Card Lost</option>
+        </select>
+    </div>
+
+    <div class="custom-select">
+        <label>Reason</label>
+
+    <select class="se" asp-for="Reason" required>
+            <option value="Lost ID card">Lost ID card</option>
+            <option value="Damaged or broken card">Damaged or broken card</option>
+            <option value="Expired ID card">Expired ID card</option>
+            <option value="Change in personal details">Change in personal details</option>
+    </select>
+
+
+     </div>
+     <!--
+
+        @if (Model.Role == "Employee")
+        {
+            <a asp-page="/ViewEmployee" class="btn btn-secondary mt-3">View My Profile</a>
+        }
+        else if (Model.Role == "Student")
+        {
+            <a asp-page="/ViewStudent" class="btn btn-secondary mt-3">View My Profile</a>
+        }
+
+           <br />-->
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+

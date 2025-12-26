@@ -1,0 +1,9 @@
+﻿@page
+@model IDCardAutomation.Pages.LogoutModel
+@functions {
+    public IActionResult OnGet()
+    {
+        HttpContext.Session.Clear();
+        return RedirectToPage("/Account/SignIn"); // or "/User/Login" depending on your route
+    }
+}

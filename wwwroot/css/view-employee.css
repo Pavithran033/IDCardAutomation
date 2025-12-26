@@ -1,0 +1,116 @@
+﻿/* Background */
+
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f0f8ff, #e1f5fe);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Outer container */
+
+.view-employee-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background-color: #ffffffee;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+
+.h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
+/* Photo section */
+
+.photo-section {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.employee-photo {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 3px solid #b0bec5;
+}
+
+.no-photo {
+    font-style: italic;
+    color: #999;
+}
+
+/* Details section */
+
+.details-section p {
+    font-size: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+    margin: 0;
+}
+
+.details-section strong {
+    width: 180px;
+    display: inline-block;
+    color: #333;
+}
+
+/* Back button */
+
+.details-section .btn {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 10px 20px;
+    background-color: #0d6efd;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+    .details-section .btn:hover {
+        background-color: #084dc0;
+    }
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+
+    .view-employee-container {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .employee-photo {
+        width: 120px;
+        height: 120px;
+    }
+
+    .details-section strong {
+        width: 140px;
+    }
+
+    .details-section p {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .details-section strong {
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    .details-section p {
+        font-size: 14px;
+        padding: 6px 0;
+    }
+}

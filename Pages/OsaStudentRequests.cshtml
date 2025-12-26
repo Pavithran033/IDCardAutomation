@@ -1,0 +1,105 @@
+﻿@page
+@model IDCardAutomation.Pages.OsaStudentRequestsModel
+@{
+    ViewData["Title"] = "OSA - Student Requests";
+}
+<link href="/css/studentstatus.css" rel="stylesheet" asp-append-version="true" />
+<!-- Logout Button -->
+
+<h2>Pending Student Requests</h2>
+
+<input type="text" id="searchBox" class="form-control mb-3" placeholder="Search by Roll Number" onkeyup="filterTable()" />
+
+<table class="table table-bordered table-striped" id="requestTable">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Roll Number</th>
+            <th>Reason</th>
+            <th>Created At</th>
+            <th>Request Count</th>
+            <th>View</th>
+            <th>Edit</th>
+            <th>Status</th>
+            <th>Remarks</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var req in Model.Requests)
+        {
+            <tr id="row-@req.RequestID">
+                <td>@req.FullName</td>
+                <td class="roll-col">@req.CodeOrRoll</td>
+                <td>@req.Reason</td>
+                <td>@req.CreatedAt.ToString("g")</td>
+                <td>@req.RequestCount</td>
+                <td>
+                    <a asp-page="/ViewStudent" asp-route-id="@req.EntityID" class="btn btn-sm btn-info">View</a>
+                </td>
+                <td>
+                    @if (string.IsNullOrEmpty(req.OSAStatus))
+                    {
+                        <a asp-page="/EditStudent" asp-route-id="@req.EntityID" class="btn btn-sm btn-warning">Edit</a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-sm btn-secondary" disabled>Edit</button>
+                    }
+                </td>
+                <td>
+                    <span class="badge @(req.OSAStatus switch {
+                        "Approved" => "bg-success",
+                        "Rejected" => "bg-danger",
+                        _ => "bg-warning text-dark"
+                    })">
+                        @(req.OSAStatus ?? "Pending")
+                    </span>
+                </td>
+                <td>
+                    @if (string.IsNullOrEmpty(req.OSAStatus))
+                    {
+                        <form method="post" id="form-@req.RequestID">
+                            <input type="hidden" name="RequestID" value="@req.RequestID" />
+                            <input type="text" name="Remarks" class="form-control" placeholder="Enter remarks" />
+                        </form>
+                    }
+                    else
+                    {
+                        <input type="text" class="form-control" value="@req.Remarks" readonly />
+                    }
+                </td>
+                <td>
+                    @if (string.IsNullOrEmpty(req.OSAStatus))
+                    {
+                        <button form="form-@req.RequestID" type="submit" name="ActionType" value="Approve" class="btn btn-sm btn-success">Approve</button>
+                        <button form="form-@req.RequestID" type="submit" name="ActionType" value="Reject" class="btn btn-sm btn-danger mt-1">Reject</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-sm btn-outline-secondary" disabled>Processed</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function filterTable() {
+            const input = document.getElementById("searchBox");
+            const filter = input.value.toUpperCase();
+            const table = document.getElementById("requestTable");
+            const rows = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < rows.length; i++) {
+                const rollCol = rows[i].getElementsByClassName("roll-col")[0];
+                if (rollCol) {
+                    const txtValue = rollCol.textContent || rollCol.innerText;
+                    rows[i].style.display = txtValue.toUpperCase().includes(filter) ? "" : "none";
+                }
+            }
+        }
+    </script>
+}

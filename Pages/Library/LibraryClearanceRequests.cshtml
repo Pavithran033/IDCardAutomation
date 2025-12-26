@@ -1,0 +1,79 @@
+﻿@page
+@model IDCardAutomation.Pages.Library.LibraryClearanceRequestsModel
+@{
+    ViewData["Title"] = "Library Clearance Requests";
+}
+
+<link href="/css/studentstatus.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Library Clearance Requests</h2>
+</div>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+<form method="get" class="mb-3 d-flex flex-wrap gap-2">
+    <input type="text" name="Search" class="form-control w-25" placeholder="Search..." value="@Model.Search" />
+    <select name="StatusFilter" class="form-select w-auto">
+        <option value="All" selected="@(Model.StatusFilter == "All")">All</option>
+        <option value="Pending" selected="@(Model.StatusFilter == "Pending")">Pending</option>
+        <option value="Approved" selected="@(Model.StatusFilter == "Approved")">Approved</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<table id="requestsTable" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>S.No</th>
+            <th>Emp Code</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Email</th>
+            <th>Resignation Date</th>
+            <th>Status</th>
+            <th>Remarks</th>
+            <th>Update</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Requests.Count; i++)
+        {
+            var r = Model.Requests[i];
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@r.EmpCode</td>
+                <td>@r.Name</td>
+                <td>@r.Department</td>
+                <td>@r.Designation</td>
+                <td>@r.Email</td>
+                <td>@r.ResignationDate.ToString("dd-MM-yyyy")</td>
+                <td>
+                    <span class="badge @(r.Status == "Approved" ? "bg-success" : "bg-warning text-dark")">@r.Status</span>
+                </td>
+                <td>@(string.IsNullOrEmpty(r.Remarks) ? "None" : r.Remarks)</td>
+                <td>
+                    @if (r.Status != "Approved")
+                    {
+                        <form method="post">
+                            <input type="hidden" name="RequestID" value="@r.RequestID" />
+                            <textarea name="Remarks[@r.RequestID]" class="form-control mb-1" rows="1">@r.Remarks</textarea>
+                            <div class="update-actions">
+                                <button type="submit" name="action" value="save_@r.RequestID" class="btn btn-sm btn-warning">Save Changes</button>
+                                <button type="submit" name="action" value="approve_@r.RequestID" class="btn btn-sm btn-success">Approve</button>
+                            </div>
+                        </form>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Locked</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

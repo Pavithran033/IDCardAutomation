@@ -1,0 +1,12 @@
+﻿@page
+@model IDCardAutomation.Pages.Account.EntryModel
+@{
+    ViewData["Title"] = "Welcome";
+}
+<h2>Welcome to ID Card Automation</h2>
+
+
+<div style="margin-bottom: 20px;">
+    <button onclick="location.href='@Url.Page("/Account/SignIn")'">Sign In</button>
+    <button onclick="location.href='@Url.Page("/Account/SignUp")'">Sign Up</button>
+</div>

@@ -1,0 +1,114 @@
+﻿/* Fullscreen background */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('/images/KCTBanner.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Center content */
+.reset-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding-top: 80px; /* if navbar exists */
+}
+
+/* Glassmorphism form container */
+.form-container {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 30px;
+    width: 360px;
+    max-width: 90%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: #000;
+}
+
+/* Logo */
+.logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Heading */
+h2 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+/* Input */
+input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #000;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Placeholder */
+input::placeholder {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+/* Focus */
+input:focus {
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background-color: #0047ab;
+    color: #fff;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+    button:hover {
+        background-color: #003080;
+    }
+
+/* Back button */
+/* Back Button (White with dark blue text) */
+.btn-back {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #ffffff; /* White */
+    color: #003366; /* Dark blue text */
+    border: 2px solid #003366; /* Outline */
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+    .btn-back:hover {
+        background-color: #003366; /* Dark blue background */
+        color: #ffffff; /* White text on hover */
+    }

@@ -1,0 +1,31 @@
+﻿@page
+@model IDCardAutomation.Pages.ClearanceFormModel
+@{
+    ViewData["Title"] = "No Due Clearance Form";
+}
+
+   
+<a asp-page="/ReissueOptions" class="btn btn-back">Back</a>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+<link href="~/css/loginpage.css" rel="stylesheet" asp-append-version="true" />
+<div class="form-container">
+    <h2>No Due Clearance Form</h2>
+
+    <form method="post">
+        <div>
+            <label>Employee Code:</label>
+            <input type="text" value="@Model.EmpCode" readonly class="form-control" />
+        </div>
+        <div>
+            <label>Name:</label>
+            <input type="text" value="@Model.FullName" readonly class="form-control" />
+        </div>
+
+        <br />
+        <button type="submit" class="btn btn-primary">Submit Request</button>
+    </form>
+</div>

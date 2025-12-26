@@ -1,0 +1,95 @@
+﻿@page
+@model IDCardAutomation.Pages.StudentStatusModel
+@{
+    var userRole = HttpContext.Session.GetString("UserRole");
+    ViewData["Title"] = "Student Reissue Status";
+}
+
+<link href="/css/studentstatus.css" rel="stylesheet" asp-append-version="true" />
+
+<a asp-page="/Dashboard" class="btn btn-secondary">Back</a> <!-- fallback -->
+<h2>Student Reissue Requests</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<input type="text" id="searchBox" class="form-control mb-3" placeholder="Search by Roll Number" onkeyup="filterTable()" />
+
+<table class="table table-bordered" id="requestTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th class="roll-col">Roll No</th>
+            <th>Reason</th>
+            <th>Created At</th>
+            <th>Status</th>
+            <th>Actions</th>
+            
+            <th>Deliver</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var req in Model.Requests)
+        {
+            <tr>
+                <td>@req.FullName</td>
+                <td class="roll-col">@req.CodeOrRoll</td>
+                <td>@req.Reason</td>
+                <td>@req.CreatedAt.ToString("g")</td>
+                <td>
+                    <span class="badge
+                    @(req.ApprovalStatus.Contains("Approved") ? "bg-success" :
+                                                                  "bg-secondary")">
+                    @req.ApprovalStatus
+                </span>
+            </td>
+
+
+                <td>
+                    <a asp-page="/ViewStudent" asp-route-id="@req.EntityID" class="btn btn-sm btn-info">View</a>
+                </td>
+               
+                <td>
+                    @if (userRole == "Admin" && req.DeliveryStatus != "Delivered")
+                    {
+                        <form method="post">
+                            <input type="hidden" name="RequestID" value="@req.RequestID" />
+                            <input type="hidden" name="ActionType" value="Deliver" />
+                            <button type="submit" class="btn btn-sm btn-success">Deliver</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span class="text-success">Delivered</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts {
+    <script>
+        function filterTable() {
+            const input = document.getElementById("searchBox");
+            const filter = input.value.toUpperCase();
+            const table = document.getElementById("requestTable");
+            const rows = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < rows.length; i++) {
+                const rollCell = rows[i].getElementsByClassName("roll-col")[0];
+                if (rollCell) {
+                    const txtValue = rollCell.textContent || rollCell.innerText;
+                    rows[i].style.display = txtValue.toUpperCase().includes(filter) ? "" : "none";
+                }
+            }
+        }
+    </script>
+}

@@ -1,0 +1,88 @@
+﻿/* Fullscreen background applied to the whole page */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('/images/KCTBanner.png') no-repeat center center fixed;
+    background-size: cover; /* fills the entire page */
+}
+
+/* Center login form vertically and horizontally */
+.login-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding-top: 80px; /* prevent overlap with navbar */
+}
+
+/* Glassmorphism card */
+.form-container {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 40px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+/* Logo styling */
+.logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Form inputs */
+.form-control {
+    border-radius: 10px;
+    padding: 12px;
+    border: none;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #000;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+    .form-control::placeholder {
+        color: rgba(0, 0, 0, 0.6);
+    }
+
+    /* Input focus */
+    .form-control:focus {
+        background-color: rgba(255, 255, 255, 0.6);
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.6);
+    }
+
+/* Button */
+.btn-primary {
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: #0047ab;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background-color: #003080;
+    }
+
+/* Links */
+a {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }

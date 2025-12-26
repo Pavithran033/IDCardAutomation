@@ -1,0 +1,86 @@
+﻿@page "{id:int}"
+@model IDCardAutomation.Pages.EditStudentModel
+@{
+    ViewData["Title"] = "Edit Student";
+}
+
+<link href="~/css/Editemployee.css" rel="stylesheet" asp-append-version="true" />
+
+
+<h2>Edit Student Details</h2>
+
+<form method="post" enctype="multipart/form-data" class="container">
+    <input type="hidden" asp-for="Student.StudentID" />
+
+    <div>
+        <label>Roll Number</label>
+        <input asp-for="Student.RollNumber" class="form-control" />
+    </div>
+    <div>
+        <label>Full Name</label>
+        <input asp-for="Student.FullName" class="form-control" />
+    </div>
+    <div>
+        <label>Date of Birth</label>
+        <input asp-for="Student.DOB" type="date" class="form-control" />
+    </div>
+    <div>
+        <label>Department ID</label>
+        <input asp-for="Student.DepartmentID" class="form-control" type="number" />
+
+    </div>
+    <div>
+        <label>Year Of Study</label>
+        <input asp-for="Student.YearOfStudy" class="form-control" />
+    </div>
+    
+    <div>
+        <label>Phone</label>
+        <input asp-for="Student.PhoneNumber" class="form-control" />
+    </div>
+    <div>
+        <label>Email</label>
+        <input asp-for="Student.Email" class="form-control" />
+    </div>
+    <div>
+        <label>Blood Group</label>
+        <input asp-for="Student.BloodGroup" class="form-control" />
+    </div>
+    <div>
+        <label>Address</label>
+        <input asp-for="Student.Address" class="form-control" />
+    </div>
+    
+        <div class="mb-3">
+            <label class="form-label">Hostel/Dayscholar</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" asp-for="Student.HostelDayscholar" value="Hostel" id="hostelOption" />
+                <label class="form-check-label" for="hostelOption">Hostel</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" asp-for="Student.HostelDayscholar" value="Dayscholar" id="dayscholarOption" />
+                <label class="form-check-label" for="dayscholarOption">Dayscholar</label>
+            </div>
+        </div>
+
+    <div class="mb-3">
+        <label for="photo" class="form-label">Current Photo</label><br />
+        @if (!string.IsNullOrEmpty(Model.Base64Photo))
+        {
+            <img src="@Model.Base64Photo" alt="Student Photo" width="150" />
+        }
+        else
+        {
+            <span>No photo uploaded</span>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label for="NewPhoto" class="form-label">Upload New Photo</label>
+        <input type="file" asp-for="NewPhoto" class="form-control" />
+    </div>
+
+    <!-- Add other fields similarly -->
+
+    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+</form>

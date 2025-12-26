@@ -1,0 +1,209 @@
+﻿/* Page Background */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fc;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+/* Page Title */
+h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #003366;
+}
+
+/* Back button */
+a.btn-secondary {
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    color: #003366;
+    border: 2px solid #003366;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+    a.btn-secondary:hover {
+        background-color: #003366;
+        color: #ffffff;
+    }
+
+/* Search Box */
+#searchBox {
+    max-width: 400px;
+    margin: 0 auto 20px auto;
+    display: block;
+    border-radius: 8px;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease;
+}
+
+    #searchBox:focus {
+        border-color: #003366;
+        box-shadow: 0 0 6px rgba(0, 51, 102, 0.4);
+        outline: none;
+    }
+
+/* Table */
+.table {
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 100%;
+}
+
+    .table th {
+        background-color: #003366;
+        color: #ffffff;
+        text-align: center;
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .table td {
+        padding: 12px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    /* Table Hover */
+    .table tbody tr:hover {
+        background-color: #f1f5ff;
+        transition: background-color 0.3s ease;
+    }
+
+/* Status Badges */
+.badge {
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 12px;
+}
+
+/* Action Buttons */
+.btn-info {
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+    .btn-info:hover {
+        background-color: #0056b3;
+    }
+
+/* Deliver Button */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+    .btn-success:hover {
+        background-color: #1e7e34;
+    }
+
+/* Delivered Text */
+.text-success {
+    font-weight: bold;
+    color: #28a745 !important;
+}
+/* Back Button (White with dark blue text) */
+.btn-back {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #ffffff; /* White */
+    color: #003366; /* Dark blue text */
+    border: 2px solid #003366; /* Outline */
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+    .btn-back:hover {
+        background-color: #003366; /* Dark blue background */
+        color: #ffffff; /* White text on hover */
+    }
+    /*dts clearance css */
+/* =========================
+   Search Box
+   ========================= */
+#searchInput {
+    width: 280px; /* compact width */
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1px solid #cfd6e4;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+    #searchInput:focus {
+        border-color: #003366;
+        box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.15);
+        outline: none;
+    }
+
+/* =========================
+   Dropdown Filter
+   ========================= */
+.filter-box select {
+    width: 200px; /* fixed width */
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1px solid #cfd6e4;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    color: #333;
+    transition: all 0.2s ease;
+}
+
+    .filter-box select:focus {
+        border-color: #003366;
+        box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.15);
+        outline: none;
+    }
+
+/* =========================
+   Flex container spacing
+   ========================= */
+.d-flex > div {
+    margin-right: 10px;
+}
+
+    .d-flex > div:last-child {
+        margin-right: 0; /* remove gap for last item */
+    }
+
+/* Make the Update column wider */
+#requestsTable td:last-child,
+#requestsTable th:last-child {
+    min-width: 220px; /* adjust as needed */
+}
+
+/* Ensure textarea + buttons stay aligned */
+.update-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Buttons side by side */
+.update-actions {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+
+
+    
+

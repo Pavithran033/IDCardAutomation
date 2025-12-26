@@ -1,0 +1,70 @@
+﻿@page
+@model IDCardAutomation.Pages.ViewStudentModel
+@{
+
+    ViewData["Title"] = "View Student";
+}
+
+<link rel="stylesheet" href="~/css/view-student.css" asp-append-version="true" />
+<div class="view-student-container">
+<h2>Student Details</h2>
+
+<div>
+    <p>
+        <strong>Photo:</strong><br />
+        @if (!string.IsNullOrEmpty(Model.Base64Photo))
+        {
+            <img src="@Model.Base64Photo" alt="Student Photo" width="150" />
+        }
+        else
+        {
+            <span>No Photo Uploaded</span>
+        }
+    </p>
+    <p><strong>Roll number:</strong> @Model.Student.RollNumber</p>
+    <p><strong>Full Name:</strong> @Model.Student.FullName</p>
+    <p><strong>DOB:</strong> @Model.Student.DOB.ToShortDateString()</p>
+    <p><strong>Department ID:</strong> @Model.Student.DepartmentID</p>
+    <p><strong>Year Of Study:</strong> @Model.Student.YearOfStudy</p>   
+    <p><strong>Phone number:</strong> @Model.Student.PhoneNumber</p>
+    <p><strong>Email:</strong> @Model.Student.Email</p>
+    <p><strong>Blood Group:</strong> @Model.Student.BloodGroup</p>
+    <p><strong>Address:</strong> @Model.Student.Address</p>
+    <p><strong>Hostel/Dayscholar:</strong> @Model.Student.HostelDayscholar</p>
+
+   <!-- <p>
+        <strong>Photo:</strong><br />
+        @if (!string.IsNullOrEmpty(Model.Base64Photo))
+        {
+            <img src="@Model.Base64Photo" alt="Student Photo" width="150" />
+        }
+        else
+        {
+            <span>No Photo Uploaded</span>
+        }
+    </p>-->
+
+    @if (Model.UserRole == "Student" || Model.UserRole == "Employee")
+{
+    <a asp-page="/ReissueStatus" class="btn btn-secondary">Back</a>
+}
+else if (Model.UserRole == "Admin" )
+{
+        <a asp-page="/StudentStatus" class="btn btn-secondary">Back</a>
+    }
+    else if(Model.UserRole =="Osa")
+    {
+        <a asp-page="/OsaStudentRequests" class="btn btn-secondary">Back</a>
+    }
+    else
+{
+   
+    <a asp-page="/Index" class="btn btn-secondary">Back</a> <!-- fallback -->
+}
+
+
+
+    
+
+</div>
+</div>
